@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::view("add","addmember");
 Route::post("add",[MemberController::class,"addData"]);
 
+
 Route::get("list",[MemberController::class,"show"]);
 Route::get("delete/{id}",[MemberController::class,"delete"]);
 Route::get("edit/{id}",[MemberController::class,"showdata"]);

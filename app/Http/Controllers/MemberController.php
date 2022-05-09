@@ -8,13 +8,17 @@ use App\Models\Member;
 class MemberController extends Controller
 {
     function addData(Request $req){
+        $req->validate([
+            "name"=>"required",
+            "email"=>"required",
+            "address"=>"required"
+        ]);
         $member = new Member;
         $member->name =$req->name;
         $member->email =$req->email;
         $member->address =$req->address;
         $member->save();
         return redirect("add");
-
 
     }
     function show(){
@@ -46,4 +50,15 @@ class MemberController extends Controller
         $data=Member::WHERE("name","LIKE","%".$search_text."%")->get();
         return view("search_result",["members"=>$data]);
     }
+    function valid(Request $req){
+        $req->validate([
+            "name"=>"required",
+            "email"=>"required",
+        ]);
+        
+    
+    }
 }
+
+   
+
