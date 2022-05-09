@@ -7,6 +7,7 @@
     <style>
         h1{
             color: red;
+            
         }
     </style>
     <title>@yield("title")</title>
