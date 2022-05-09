@@ -31,6 +31,7 @@ Route::get("delete/{id}",[MemberController::class,"delete"]);
 Route::get("edit/{id}",[MemberController::class,"showdata"]);
 Route::post("edit",[MemberController::class,"update"]);
 Route::get("search",[MemberController::class,"search"]);
+Route::view("head","head");
 
 
 

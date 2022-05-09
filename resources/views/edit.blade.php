@@ -1,4 +1,5 @@
-<h1>updata data about user</h1><br><br>
+@yield("title")
+<h2>updata data about user</h2><br><br>
 <form action="/edit" method="POST">
     @csrf
     <input type="hidden" name="id" placeholder="enter name" value="{{$data["id"]}}"><br><br>
