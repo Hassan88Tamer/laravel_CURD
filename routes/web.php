@@ -24,6 +24,7 @@ Route::get('/', function () {
    return view('welcome');
 });
 Route::view("add","addmember");
+Route::view("filter","filter");
 Route::post("add",[MemberController::class,"addData"]);
 
 
@@ -33,6 +34,7 @@ Route::get("edit/{id}",[MemberController::class,"showdata"]);
 Route::post("edit",[MemberController::class,"update"]);
 Route::get("search",[MemberController::class,"search"]);
 Route::view("head","head");
+Route::get("filter",[MemberController::class,"filter"]);
 
 
 

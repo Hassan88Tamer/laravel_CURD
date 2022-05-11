@@ -29,6 +29,8 @@
 </form>
 
 
-<a href="list">go to list to show data</a>
+<a href="list">go to list to show data</a><br><br>
+<a href="filter">go to list to filter page</a>
+
 
 @endsection

@@ -50,14 +50,26 @@ class MemberController extends Controller
         $data=Member::WHERE("name","LIKE","%".$search_text."%")->get();
         return view("search_result",["members"=>$data]);
     }
-    function valid(Request $req){
-        $req->validate([
-            "name"=>"required",
-            "email"=>"required",
-        ]);
+    public function filter(Request $req){
+        $member = new Member;
+        $name=$req->name;
+        $address=$req->address;
         
-    
+        if($address="null"&&$name!="null"){               //filter with name
+            $data=Member::WHERE("name","LIKE","%".$name."%")->get();
+        }
+        if($address!="null"&&$name="null"){               //filter with address
+            $data=Member::WHERE("address","LIKE","%".$address."%")->get();
+        }
+        return view("filter",["members"=>$data]);
+        echo $name;
+        
+        
+       
+        
+        
     }
+
 }
 
    
