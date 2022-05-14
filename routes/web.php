@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AddMember;
 use App\Http\Controllers\MemberController;
+use App\Mail\SampleMail;
                    //App not app
 
 
@@ -20,21 +21,31 @@ use App\Http\Controllers\MemberController;
 
 
 //Route::post("users",[UsersController::class,"getData"]);
-Route::get('/', function () {
+
+
+
+ //views Route
+Route::get('/', function () {               
    return view('welcome');
 });
 Route::view("add","addmember");
 Route::view("filter","filter");
-Route::post("add",[MemberController::class,"addData"]);
+Route::view("head","head");
 
+//post Route
+Route::post("add",[MemberController::class,"addData"]);
+Route::post("contact",[MemberController::class,"addData"]);
+Route::post("edit",[MemberController::class,"update"]);
+
+//Get Route
 
 Route::get("list",[MemberController::class,"show"]);
 Route::get("delete/{id}",[MemberController::class,"delete"]);
 Route::get("edit/{id}",[MemberController::class,"showdata"]);
-Route::post("edit",[MemberController::class,"update"]);
 Route::get("search",[MemberController::class,"search"]);
-Route::view("head","head");
 Route::get("filter",[MemberController::class,"filter"]);
+
+
 
 
 
