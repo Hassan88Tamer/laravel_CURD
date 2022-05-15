@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AddMember;
 use App\Http\Controllers\MemberController;
-use App\Mail\SampleMail;
+use App\Mail\WellcomeMail;
+use Illuminate\Support\Facades\Mail;
+
                    //App not app
 
 
@@ -28,9 +30,14 @@ use App\Mail\SampleMail;
 Route::get('/', function () {               
    return view('welcome');
 });
+Route::get('/email', function () {
+   Mail::to("hh3733468@gmail.com")->send(new WellcomeMail());  //route for mailing             
+   return new WellcomeMail();
+});
 Route::view("add","addmember");
 Route::view("filter","filter");
 Route::view("head","head");
+
 
 //post Route
 Route::post("add",[MemberController::class,"addData"]);

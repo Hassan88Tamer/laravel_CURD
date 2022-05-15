@@ -8,7 +8,8 @@
 
 
 <a href="list">go to list to show data</a><br><br>
-<a href="filter">go to list to filter page</a>
+<a href="filter">go to list to filter page</a><br><br>
+<a href="email">Contact us</a>
 
 @endsection
 
