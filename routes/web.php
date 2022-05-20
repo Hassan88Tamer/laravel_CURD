@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AddMember;
+use App\Http\Controllers\EmplyeeController;
 use App\Http\Controllers\MemberController;
+use App\Imports\EmployeeImport;
 use App\Mail\WellcomeMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,12 +39,14 @@ Route::get('/email', function () {
 Route::view("add","addmember");
 Route::view("filter","filter");
 Route::view("head","head");
+Route::view("import-form","import-form");
 
 
 //post Route
 Route::post("add",[MemberController::class,"addData"]);
 Route::post("contact",[MemberController::class,"addData"]);
 Route::post("edit",[MemberController::class,"update"]);
+Route::post("import",[MemberController::class,"import"]);
 
 //Get Route
 
@@ -51,6 +55,10 @@ Route::get("delete/{id}",[MemberController::class,"delete"]);
 Route::get("edit/{id}",[MemberController::class,"showdata"]);
 Route::get("search",[MemberController::class,"search"]);
 Route::get("filter",[MemberController::class,"filter"]);
+Route::get("export-excel",[MemberController::class,"exportIntoExcel"]);
+Route::get("export-csv",[MemberController::class,"exportIntoCSV"]);
+
+
 
 
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Mail\SampleMail;
+use App\Exports\EmployeeExport;
+use App\Imports\EmployeeImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MemberController extends Controller
 {
@@ -73,6 +76,24 @@ class MemberController extends Controller
         }
         return view("filter",["members"=>$data]);
         echo $name;  
+    }
+    public function exportIntoExcel(){
+        return Excel::download(new EmployeeExport,"MembersList.xlsx");
+    }
+    public function exportIntoCSV(){
+        return Excel::download(new EmployeeExport,"MembersList.csv");
+    }
+    public function importForm(){
+        return view("import-form");
+    }
+    public function import(Request $req){
+        $req->validate([
+            "file"=>"required",
+        ]);
+        Excel::import(new EmployeeImport,$req->file);
+        return "imports are decorded succefully";
+
+
     }
 
 }

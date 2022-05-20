@@ -41,5 +41,10 @@
     <input type="search" name="search" placeholder="search">
     <button type="submit" >SEARCH</button>
 
-</form>
+</form><br><br>
+
+<a href="export-excel" style="background-color:red;">download data as excel file</a>
+<a href="export-csv" style="background-color:red;">download data as csv file</a>
+<a href="import-form" style="background-color:green;">import excel in database</a>
+
 @endsection
