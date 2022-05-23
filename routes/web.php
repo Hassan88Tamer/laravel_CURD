@@ -36,12 +36,15 @@ Route::get('/', function () {
    return view('welcome');
 });
 
+
 Route::view("add","addmember");
 Route::view("filter","filter");
 Route::view("head","head");
 Route::view("import-form","import-form");
 Route::view("/home","welcome");
-Route::view("login","auth/login")
+Route::view("/home","welcome");
+Route::view("/login","auth\login");
+
 
 //post Route
 Route::post("add",[MemberController::class,"addData"]);
@@ -62,6 +65,8 @@ Route::get("export-excel",[MemberController::class,"exportIntoExcel"]);
 Route::get("export-csv",[MemberController::class,"exportIntoCSV"]);
 Route::get('/email',[MemberController::class,"email"]);
 Route::get("/alert",[MemberController::class,"alert"]);
+Route::get("/login",[MemberController::class,"login"]);
+
 
 
 

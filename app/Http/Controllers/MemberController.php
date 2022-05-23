@@ -29,7 +29,7 @@ class MemberController extends Controller
         $member->email =$req->email;
         $member->address =$req->address;
         $member->save();
-        return redirect("add")->Alert::success('HI ', 'user is added successfully');
+        return redirect("add");
         
 
     }
@@ -115,7 +115,9 @@ class MemberController extends Controller
 
         
     }
-
+    function login(){
+        return view("auth\login");
+    }
 
 }
 
