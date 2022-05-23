@@ -8,10 +8,17 @@ use App\Mail\SampleMail;
 use App\Exports\EmployeeExport;
 use App\Imports\EmployeeImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Mail\WellcomeMail;
+use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
+//use Alert;
+
 
 class MemberController extends Controller
 {
     function addData(Request $req){            //add user  (login)
+        
         $req->validate([
             "name"=>"required",
             "email"=>"required",
@@ -22,7 +29,8 @@ class MemberController extends Controller
         $member->email =$req->email;
         $member->address =$req->address;
         $member->save();
-        return redirect("add");
+        return redirect("add")->Alert::success('HI ', 'user is added successfully');
+        
 
     }
     function show(){                     //show database 
@@ -32,6 +40,7 @@ class MemberController extends Controller
     function delete($id){
         $data =Member::find($id);        //delete user from database
         $data->delete();
+        Alert::success('HI', 'Member deleted succefully');
         return redirect("list");
 
     }
@@ -51,6 +60,7 @@ class MemberController extends Controller
         "address"=>"required"
     ]);
        $data->save();
+       Alert::success('HI', 'Member updated succefully');
        return redirect("list");
     }
     function search(Request $req){          //search by name or email or address
@@ -60,7 +70,7 @@ class MemberController extends Controller
         $data=Member::WHERE("name","LIKE","%".$search_text."%")->orWHERE("email","LIKE","%".$search_text."%")
         ->orWhere("address","LIKE","%".$search_text."%")->get();
 
-        return view("search_result",["members"=>$data]);
+        return view("list",["members"=>$data]);
 
     }
     public function filter(Request $req){          //filtering
@@ -95,6 +105,17 @@ class MemberController extends Controller
 
 
     }
+    public function email(){
+        Mail::to("hh3733468@gmail.com")->send(new WellcomeMail());  //route for mailing             
+        return new WellcomeMail();
+    }
+    public function alert(){
+        Alert::success('Title', 'Message');
+        return view("welcome");
+
+        
+    }
+
 
 }
 

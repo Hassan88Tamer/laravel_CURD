@@ -8,6 +8,9 @@ use App\Http\Controllers\MemberController;
 use App\Imports\EmployeeImport;
 use App\Mail\WellcomeMail;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
+
+
 
                    //App not app
 
@@ -32,21 +35,21 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {               
    return view('welcome');
 });
-Route::get('/email', function () {
-   Mail::to("hh3733468@gmail.com")->send(new WellcomeMail());  //route for mailing             
-   return new WellcomeMail();
-});
+
 Route::view("add","addmember");
 Route::view("filter","filter");
 Route::view("head","head");
 Route::view("import-form","import-form");
-
+Route::view("/home","welcome");
+Route::view("login","auth/login")
 
 //post Route
 Route::post("add",[MemberController::class,"addData"]);
 Route::post("contact",[MemberController::class,"addData"]);
 Route::post("edit",[MemberController::class,"update"]);
 Route::post("import",[MemberController::class,"import"]);
+Route::post("/formPost",[MemberController::class,"formPost"]);
+Route::post("/form",[MemberController::class,"form"]);
 
 //Get Route
 
@@ -57,6 +60,8 @@ Route::get("search",[MemberController::class,"search"]);
 Route::get("filter",[MemberController::class,"filter"]);
 Route::get("export-excel",[MemberController::class,"exportIntoExcel"]);
 Route::get("export-csv",[MemberController::class,"exportIntoCSV"]);
+Route::get('/email',[MemberController::class,"email"]);
+Route::get("/alert",[MemberController::class,"alert"]);
 
 
 
@@ -64,3 +69,13 @@ Route::get("export-csv",[MemberController::class,"exportIntoCSV"]);
 
 
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
