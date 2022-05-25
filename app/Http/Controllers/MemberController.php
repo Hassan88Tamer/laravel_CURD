@@ -17,109 +17,111 @@ use Illuminate\Support\Facades\Validator;
 
 class MemberController extends Controller
 {
-    function addData(Request $req){            //add user  (login)
-        
+    function addData(Request $req)
+    {            //add user  (login)
+
         $req->validate([
-            "name"=>"required",
-            "email"=>"required",
-            "address"=>"required"
+            "name" => "required",
+            "email" => "required",
+            "address" => "required"
         ]);
         $member = new Member;
-        $member->name =$req->name;
-        $member->email =$req->email;
-        $member->address =$req->address;
+        $member->name = $req->name;
+        $member->email = $req->email;
+        $member->address = $req->address;
         $member->save();
         return redirect("add");
-        
-
     }
-    function show(){                     //show database 
-        $data= Member::all();
-        return view("list",["members"=>$data]);
+    function show()
+    {                     //show database 
+        $data = Member::all();
+        return view("list", ["members" => $data]);
     }
-    function delete($id){
-        $data =Member::find($id);        //delete user from database
+    function delete($id)
+    {
+        $data = Member::find($id);        //delete user from database
         $data->delete();
         Alert::success('HI', 'Member deleted succefully');
         return redirect("list");
+    }
+    function showdata($id)
+    {             //edit user data
+        $data = Member::find($id);
+        return view("edit", ["data" => $data]);
+    }
+    function update(Request $req)
+    {       //update user data
+        $data = Member::find($req->id);
 
+        $data->name = $req->name;
+        $data->email = $req->email;
+        $data->address = $req->address;
+        $req->validate([
+            "name" => "required",
+            "email" => "required",
+            "address" => "required"
+        ]);
+        $data->save();
+        Alert::success('HI', 'Member updated succefully');
+        return redirect("list");
     }
-    function showdata($id){             //edit user data
-        $data= Member::find($id);
-        return view("edit",["data"=>$data]);
-    }
-    function update(Request $req){       //update user data
-       $data=Member::find($req->id);
+    function search(Request $req)
+    {          //search by name or email or address
 
-       $data->name=$req->name;
-       $data->email=$req->email;
-       $data->address=$req->address;
-       $req->validate([
-        "name"=>"required",
-        "email"=>"required",
-        "address"=>"required"
-    ]);
-       $data->save();
-       Alert::success('HI', 'Member updated succefully');
-       return redirect("list");
-    }
-    function search(Request $req){          //search by name or email or address
-        
         $member = new Member;
-        $search_text=$req->search;
-        $data=Member::WHERE("name","LIKE","%".$search_text."%")->orWHERE("email","LIKE","%".$search_text."%")
-        ->orWhere("address","LIKE","%".$search_text."%")->get();
+        $search_text = $req->search;
+        $data = Member::WHERE("name", "LIKE", "%" . $search_text . "%")->orWHERE("email", "LIKE", "%" . $search_text . "%")
+            ->orWhere("address", "LIKE", "%" . $search_text . "%")->get();
 
-        return view("list",["members"=>$data]);
-
+        return view("list", ["members" => $data]);
     }
-    public function filter(Request $req){          //filtering
+    public function filter(Request $req)
+    {          //filtering
         $member = new Member;
-        $name=$req->name;
-        $address=$req->address;
-        
-        if($address="null"&&$name!="null"){               //filter with name
-            $data=Member::WHERE("name","LIKE","%".$name."%")->get();
+        $name = $req->name;
+        $address = $req->address;
+
+        if ($address = "null" && $name != "null") {               //filter with name
+            $data = Member::WHERE("name", "LIKE", "%" . $name . "%")->get();
         }
-        if($address!="null"&&$name="null"){               //filter with address
-            $data=Member::WHERE("address","LIKE","%".$address."%")->get();
+        if ($address != "null" && $name = "null") {               //filter with address
+            $data = Member::WHERE("address", "LIKE", "%" . $address . "%")->get();
         }
-        return view("filter",["members"=>$data]);
-        echo $name;  
+        return view("filter", ["members" => $data]);
+        echo $name;
     }
-    public function exportIntoExcel(){
-        return Excel::download(new EmployeeExport,"MembersList.xlsx");
+    public function exportIntoExcel()
+    {
+        return Excel::download(new EmployeeExport, "MembersList.xlsx");
     }
-    public function exportIntoCSV(){
-        return Excel::download(new EmployeeExport,"MembersList.csv");
+    public function exportIntoCSV()
+    {
+        return Excel::download(new EmployeeExport, "MembersList.csv");
     }
-    public function importForm(){
+    public function importForm()
+    {
         return view("import-form");
     }
-    public function import(Request $req){
+    public function import(Request $req)
+    {
         $req->validate([
-            "file"=>"required",
+            "file" => "required",
         ]);
-        Excel::import(new EmployeeImport,$req->file);
+        Excel::import(new EmployeeImport, $req->file);
         return "imports are decorded succefully";
-
-
     }
-    public function email(){
+    public function email()
+    {
         Mail::to("hh3733468@gmail.com")->send(new WellcomeMail());  //route for mailing             
         return new WellcomeMail();
     }
-    public function alert(){
+    public function alert()
+    {
         Alert::success('Title', 'Message');
         return view("welcome");
-
-        
     }
-    function login(){
+    function login()
+    {
         return view("auth\login");
     }
-
 }
-
-   
-
