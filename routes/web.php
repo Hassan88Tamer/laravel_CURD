@@ -43,7 +43,7 @@ Route::view("head","head");
 Route::view("import-form","import-form");
 Route::view("/home","welcome");
 Route::view("/home","welcome");
-Route::view("/login","auth\login");
+
 
 
 //post Route
@@ -65,7 +65,7 @@ Route::get("export-excel",[MemberController::class,"exportIntoExcel"]);
 Route::get("export-csv",[MemberController::class,"exportIntoCSV"]);
 Route::get('/email',[MemberController::class,"email"]);
 Route::get("/alert",[MemberController::class,"alert"]);
-Route::get("/login",[MemberController::class,"login"]);
+Route::get("/login",[MemberController::class,"login"])->name("login");
 
 
 
